@@ -1,5 +1,6 @@
 package com.devlab.filevault.service.impl;
 
+import com.devlab.filevault.exception.FileExpiredException;
 import com.devlab.filevault.exception.InvalidPasswordException;
 import com.devlab.filevault.model.FileMetaData;
 import com.devlab.filevault.repository.FileMetaDataRepository;
@@ -75,7 +76,7 @@ public class FileDownloadServiceImpl implements FileDownloadService {
                             .build()
             );
             fileMetaDataRepository.deleteById(fileMetaData.getId());
-            throw new IllegalArgumentException("File has reached its maximum download limit");
+            throw new FileExpiredException("File expired or download limit reached");
         }
 
         if (password != null && !passwordEncoder.matches(password, fileMetaData.getPassword())) {

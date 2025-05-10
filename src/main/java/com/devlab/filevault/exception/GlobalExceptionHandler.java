@@ -58,4 +58,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, error.getHttpStatus());
     }
 
+    @ExceptionHandler(FileExpiredException.class)
+    public ResponseEntity<CustomError> handleFileExpiredException(FileExpiredException ex) {
+        CustomError error = CustomError.builder()
+                .httpStatus(HttpStatus.GONE)
+                .header(CustomError.Header.EXPIRED.getName())
+                .message(ex.getMessage())
+                .isSuccess(false)
+                .build();
+        return new ResponseEntity<>(error, error.getHttpStatus());
+    }
+
 }

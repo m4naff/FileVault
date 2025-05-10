@@ -62,6 +62,8 @@ public class CustomError {
 
         ALREADY_EXIST("ALREADY EXIST"),
 
+        EXPIRED("EXPIRED"),
+
         NOT_FOUND("NOT EXIST"),
 
         VALIDATION_ERROR("VALIDATION ERROR"),
