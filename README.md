@@ -75,7 +75,7 @@ mvn spring-boot:run
 
 ## API Reference
 
-#### File Operations
+#### File upload
 
 ```http
   POST /api/v1/upload
@@ -90,7 +90,7 @@ mvn spring-boot:run
 
 Returns download link of the file.
 
-#### Get item
+#### File download
 
 ```http
   GET /api/v1/download/${id}
