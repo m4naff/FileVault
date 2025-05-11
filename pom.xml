@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.devlab</groupId>
-    <artifactId>FileVault</artifactId>
+    <artifactId>filevault</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>FileVault</name>
     <description>FileVault</description>
@@ -121,6 +121,16 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <to>
+                        <image>m4naff/${project.artifactId}:v1</image>
+                    </to>
                 </configuration>
             </plugin>
         </plugins>
