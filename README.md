@@ -39,7 +39,8 @@ docker run -p 9000:9000 -p 9001:9001 --name minio \
   -v ~/minio-data:/data \
   minio/minio server /data --console-address ":9001"
 ```
-
+You can enter MinIO interface with the URL: localhost:9001.
+After entering the interface you need to create a bucket to store files and define it inside application.yml
 ### 2. Configure Application
 You need to create .env file to import properties.
 Create application.yml:
