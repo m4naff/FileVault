@@ -38,40 +38,69 @@ docker run -p 9000:9000 -p 9001:9001 --name minio \
   -e "MINIO_ROOT_PASSWORD=minioadmin" \
   -v ~/minio-data:/data \
   minio/minio server /data --console-address ":9001"
+```
 
-Configure Application
+### 2. Configure Application
+You need to create .env file to import properties.
 Create application.yml:
+```bash
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    driver-class-name: org.h2.Driver
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
 minio:
-  endpoint: http://localhost:9000
-  access-key: minioadmin
-  secret-key: minioadmin
-  bucket: filevault
+  url: ${MINIO_ENDPOINT}
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_SECRET_KEY}
+  bucket: ${MINIO_BUCKET_NAME}
+```
 
-server:
-  port: 8080
-
-# Rate limiting config
-rate-limit:
-  capacity: 10
-  refill-rate: 1
-
-Build & Run
+### 3. Build & Run
 mvn clean install
 mvn spring-boot:run
 
-📚 API Reference
-Upload File
-POST /api/files
-Content-Type: multipart/form-data
+## API Reference
 
-Params:
-- file: The file to upload
-- password: The password for the file
-- expiresIn: Expiration in hours
-- maxDownloads: Maximum downloads
+#### File Operations
 
-Download File
-GET /api/files/{fileId}
+```http
+  POST /api/v1/upload
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `file` | `MultipartFile` | **Required**. To store the file |
+| `password`|`String`| `The password for the file`|
+| `expirationHours`| `int`| `Expiration date of the file`|
+| `downloadLimit`| `int` | `Download limit of the file`|
+
+Returns download link of the file.
+
+#### Get item
+
+```http
+  GET /api/v1/download/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of file to fetch |
+|`password`| `string` | Password of the file to download
+
+Returns file.
 
 
 
