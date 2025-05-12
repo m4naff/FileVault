@@ -106,6 +106,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(fileMetaData.getFileType()))
+                .header("Content-Disposition", "attachment; filename=")
                 .body(resource);
     }
 
