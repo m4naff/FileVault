@@ -69,7 +69,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                     .fileSize(file.getSize())
                     .objectKey(fileName)
                     .uploadDate(java.time.LocalDateTime.now())
-                    .expirationDate(java.time.LocalDateTime.now().plusDays(expiresInHours))
+                    .expirationDate(java.time.LocalDateTime.now().plusHours(expiresInHours))
                     .maxDownloads(downloadLimit > 0 ? downloadLimit : 5)
                     .password(password != null ? passwordEncoder.encode(password) : null)
                     .build();
